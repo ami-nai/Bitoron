@@ -125,8 +125,8 @@ void MainWindow::on_signinBtn_3_clicked()
             count++;
         }
         if (count == 1) {
-            ui->container->setCurrentIndex(6);
             connclose();
+            ui->container->setCurrentIndex(6);
         }
         else if (count == 0){
             QMessageBox msgBox;
@@ -248,40 +248,90 @@ void MainWindow::on_signupBtn_clicked()
 
 void MainWindow::on_pushButton_8_clicked()
 {
-
     QString name, mobile, address, pickup, drop, type;
     name = ui->lineEdit_3->text();
     mobile = ui->lineEdit_4->text();
     address = ui->lineEdit_5->text();
     pickup = ui->lineEdit->text();
     drop = ui->lineEdit_2->text();
-    type = "Document";
-    //type = ui->Document->text();
-    if (ui->Document) type = "Document";
-    if (ui->Package) type = "Package";
-    if (ui->Electronic) type = "Electronic";
-    if (ui->Gift) type = "Gift";
+
+    if (ui->Document->isChecked()) type = "Document";
+    else if (ui->Package->isChecked()) type = "Package";
+    else if (ui->Electronic->isChecked()) type = "Electronic";
+    else if (ui->Gift->isChecked()) type = "Gift";
 
     qDebug() << name << " " << mobile << " " << address << " " << pickup << " " << drop;
 
     connopen();
 
     QSqlQuery qry1;
-    qry1.prepare("insert into Order (Name, MobileW, Address, Pickup, Drop, Type) values ('"+name+"', '"+mobile+"', '"+address+"', '"+pickup+"', '"+drop+"', '"+type+"')");
+    qry1.prepare("INSERT INTO `Order` (Name, MobileW, Address, Pickup, Drop, Type) "
+                 "VALUES (:name, :mobile, :address, :pickup, :drop, :type)");
 
-    qDebug() << qry1.exec();
-    if (qry1.exec()) {
+    qry1.bindValue(":name", name);
+    qry1.bindValue(":mobile", mobile);
+    qry1.bindValue(":address", address);
+    qry1.bindValue(":pickup", pickup);
+    qry1.bindValue(":drop", drop);
+    qry1.bindValue(":type", type);
+
+    bool success = qry1.exec();
+
+    if (success) {
         QMessageBox msgBox;
         msgBox.setText("!!! Thank you for trusting us !!!");
         msgBox.exec();
         connclose();
         ui->container->setCurrentIndex(0);
-    }
-    else {
+    } else {
         QMessageBox msgBox;
         msgBox.setText("!!! ERROR !!!");
         msgBox.exec();
         connclose();
     }
 }
+
+
+void MainWindow::on_pushButton_11_clicked()
+{
+    ui->container->setCurrentIndex(0);
+}
+
+
+void MainWindow::on_pushButton_12_clicked()
+{
+    ui->container->setCurrentIndex(0);
+}
+
+
+void MainWindow::on_pushButton_26_clicked()
+{
+    ui->container->setCurrentIndex(0);
+}
+
+
+void MainWindow::on_pushButton_10_clicked()
+{
+    ui->container->setCurrentIndex(0);
+}
+
+
+void MainWindow::on_homeBtn_clicked()
+{
+    ui->container->setCurrentIndex(0);
+}
+
+
+void MainWindow::on_pushButton_9_clicked()
+{
+    ui->container->setCurrentIndex(2);
+}
+
+
+void MainWindow::on_backBtn_clicked()
+{
+    ui->container->setCurrentIndex(4);
+}
+
+
 

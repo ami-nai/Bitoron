@@ -1950,9 +1950,39 @@ border-bottom: 2px solid white;</string>
        </property>
       </widget>
      </widget>
+     <widget class="QPushButton" name="pushButton_12">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>75</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: none;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="bitoronImages.qrc">
+        <normaloff>:/res/logos/bitoron-website-favicon-color.png</normaloff>:/res/logos/bitoron-website-favicon-color.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>60</width>
+        <height>60</height>
+       </size>
+      </property>
+     </widget>
      <zorder>widget_12</zorder>
      <zorder>signinSection_2</zorder>
      <zorder>signupSection_2</zorder>
+     <zorder>pushButton_12</zorder>
     </widget>
     <widget class="QWidget" name="adminSignInUp">
      <widget class="QWidget" name="signinSection_3" native="true">
@@ -2655,9 +2685,39 @@ border-bottom: 2px solid white;</string>
        <string notr="true">border-image: url(:/res/images/bgnavbar1.jpg);</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="pushButton_26">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>75</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: none;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="bitoronImages.qrc">
+        <normaloff>:/res/logos/bitoron-website-favicon-color.png</normaloff>:/res/logos/bitoron-website-favicon-color.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>60</width>
+        <height>60</height>
+       </size>
+      </property>
+     </widget>
      <zorder>widget_16</zorder>
      <zorder>signinSection_3</zorder>
      <zorder>signupSection_3</zorder>
+     <zorder>pushButton_26</zorder>
     </widget>
     <widget class="QWidget" name="userPanel">
      <widget class="QWidget" name="widget" native="true">

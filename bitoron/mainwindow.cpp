@@ -335,3 +335,54 @@ void MainWindow::on_backBtn_clicked()
 
 
 
+
+void MainWindow::on_Document_2_clicked()
+{
+    QSqlQueryModel * model = new QSqlQueryModel();
+    connopen();
+    QSqlQuery qry;
+    qry.prepare("select * from list");
+    qry.exec();
+    model->setQuery(qry);
+    ui->tableView_3->setModel(model);
+    connclose();
+    qDebug() << (model->rowCount());
+}
+
+void MainWindow::on_pushButton_14_clicked()
+{
+    ui->admin_container->setCurrentIndex(0);
+}
+
+void MainWindow::on_pushButton_15_clicked()
+{
+    QSqlQueryModel * model = new QSqlQueryModel();
+    connopen();
+    QSqlQuery qry;
+    qry.prepare("select * from list");
+    qry.exec();
+    model->setQuery(qry);
+    ui->tableView->setModel(model);
+    connclose();
+    qDebug() << (model->rowCount());
+    ui->admin_container->setCurrentIndex(1);
+}
+
+
+void MainWindow::on_pushButton_17_clicked()
+{
+    QSqlQueryModel * model = new QSqlQueryModel();
+    connopen();
+    QSqlQuery qry;
+    qry.prepare("select * from list");
+    qry.exec();
+    model->setQuery(qry);
+    ui->tableView_4->setModel(model);
+    connclose();
+    qDebug() << (model->rowCount());
+    ui->admin_container->setCurrentIndex(2);
+}
+
+
+
+

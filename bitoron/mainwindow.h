@@ -106,6 +106,14 @@ private slots:
     void on_backBtn_clicked();
 
 
+    void on_Document_2_clicked();
+
+    void on_pushButton_15_clicked();
+
+    void on_pushButton_17_clicked();
+
+    void on_pushButton_14_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

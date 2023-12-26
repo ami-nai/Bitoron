@@ -386,3 +386,15 @@ void MainWindow::on_pushButton_17_clicked()
 
 
 
+
+void MainWindow::on_pushButton_16_clicked()
+{
+    ui->admin_container->setCurrentIndex(3);
+}
+
+
+void MainWindow::on_pushButton_13_clicked()
+{
+    ui->container->setCurrentIndex(0);
+}
+

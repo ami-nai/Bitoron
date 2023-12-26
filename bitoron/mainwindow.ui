@@ -4002,17 +4002,17 @@ color: rgb(255, 255, 255);
       <widget class="QPushButton" name="pushButton_13">
        <property name="geometry">
         <rect>
-         <x>50</x>
+         <x>10</x>
          <y>10</y>
-         <width>31</width>
-         <height>31</height>
+         <width>41</width>
+         <height>41</height>
         </rect>
        </property>
        <property name="cursor">
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="styleSheet">
-        <string notr="true">image: url(:/res/icons/dark Orange/home.svg);
+        <string notr="true">image: url(:/res/logos/bitoron-website-favicon-color.png);
 border:none;
 </string>
        </property>
@@ -4037,7 +4037,7 @@ border:none;
 	border:none;
 	font-size: 18px;
 	text-align: left;
-	padding-left: 5px;
+	padding-left: 10px;
 }
 
 QPushButton:focus{
@@ -4053,33 +4053,12 @@ QPushButton:focus{
        </property>
        <property name="iconSize">
         <size>
-         <width>30</width>
-         <height>30</height>
+         <width>25</width>
+         <height>25</height>
         </size>
        </property>
        <property name="checkable">
         <bool>false</bool>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_16">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>31</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="cursor">
-        <cursorShape>PointingHandCursor</cursorShape>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">image: url(:/res/icons/dark Orange/home.svg);
-border:none;
-</string>
-       </property>
-       <property name="text">
-        <string/>
        </property>
       </widget>
       <widget class="QPushButton" name="pushButton_15">
@@ -4099,23 +4078,23 @@ border:none;
 	border:none;
 	font-size: 18px;
 	text-align: left;
-	padding-left: 5px;
+	padding-left: 10px;
 }
 QPushButton:focus{
 	background-color: white;
 }</string>
        </property>
        <property name="text">
-        <string>Users</string>
+        <string> Users</string>
        </property>
        <property name="icon">
         <iconset resource="bitoronImages.qrc">
-         <normaloff>:/res/icons/dark Orange/clock.svg</normaloff>:/res/icons/dark Orange/clock.svg</iconset>
+         <normaloff>:/res/icons/dark Orange/users.svg</normaloff>:/res/icons/dark Orange/users.svg</iconset>
        </property>
        <property name="iconSize">
         <size>
-         <width>30</width>
-         <height>30</height>
+         <width>25</width>
+         <height>25</height>
         </size>
        </property>
        <property name="checkable">
@@ -4139,27 +4118,65 @@ QPushButton:focus{
 	border:none;
 	font-size: 18px;
 	text-align: left;
-	padding-left: 5px;
+	padding-left: 10px;
 }
 QPushButton:focus{
 	background-color: white;
 }</string>
        </property>
        <property name="text">
-        <string>Transporters</string>
+        <string> Transporters</string>
        </property>
        <property name="icon">
         <iconset resource="bitoronImages.qrc">
-         <normaloff>:/res/icons/dark Orange/clock.svg</normaloff>:/res/icons/dark Orange/clock.svg</iconset>
+         <normaloff>:/res/icons/dark Orange/user.svg</normaloff>:/res/icons/dark Orange/user.svg</iconset>
        </property>
        <property name="iconSize">
         <size>
-         <width>30</width>
-         <height>30</height>
+         <width>25</width>
+         <height>25</height>
         </size>
        </property>
        <property name="checkable">
         <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_16">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>90</y>
+         <width>31</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border-radius:15px;
+border: 2px solid rgb(254, 247, 239);
+image: url(:/res/icons/white/user.svg);
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="Line" name="line_3">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>130</y>
+         <width>118</width>
+         <height>2</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(206, 36, 14);</string>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
       </widget>
      </widget>
@@ -4184,6 +4201,13 @@ QPushButton:focus{
           <width>781</width>
           <height>381</height>
          </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QTableView{
+	border-top: 2px solid rgb(206, 36, 14);
+}
+
+</string>
         </property>
        </widget>
        <widget class="QPushButton" name="pushButton_42">
@@ -4530,6 +4554,9 @@ background-color:none;
           <height>471</height>
          </rect>
         </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
        </widget>
       </widget>
       <widget class="QWidget" name="Transporters">
@@ -4542,8 +4569,12 @@ background-color:none;
           <height>451</height>
          </rect>
         </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
        </widget>
       </widget>
+      <widget class="QWidget" name="Admin_Profile"/>
      </widget>
     </widget>
     <widget class="QWidget" name="page">

@@ -3,9 +3,10 @@
 
 #include <QMainWindow>
 #include <QMessageBox>
-#include <QtSql>
 #include <QtDebug>
 #include <QFileInfo>
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,49 +20,6 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    QSqlDatabase mydb;
-
-    void connclose () {
-        mydb.close();
-        mydb.removeDatabase(QSqlDatabase::defaultConnection);
-    }
-
-    bool connopen () {
-        mydb=QSqlDatabase::addDatabase("QSQLITE");
-        mydb.setDatabaseName("F:/Shahriar IIUC/2nd Sem/CSE/Final/Final Project/Bit-trial/bitoron/LogInData.db");
-
-        if (!mydb.open()) {
-            qDebug("Database cannot be accessed");
-            return false;
-        }
-        else {
-            qDebug("Database Connected");
-            return true;
-        }
-
-    }
-
-//    QSqlDatabase myorder;
-
-//    void connclose2 () {
-//        myorder.close();
-//        myorder.removeDatabase(QSqlDatabase::defaultConnection);
-//    }
-
-//    bool connopen2 () {
-//        myorder=QSqlDatabase::addDatabase("QSQLITE");
-//        myorder.setDatabaseName("C:/Qt/Projects/Bitoron-main/bitoron/LogInData.db");
-
-//        if (!myorder.open()) {
-//            qDebug("Database cannot be accessed");
-//            return false;
-//        }
-//        else {
-//            qDebug("Database Connected");
-//            return true;
-//        }
-
-//    }
 
 
 private slots:
@@ -105,7 +63,6 @@ private slots:
 
     void on_backBtn_clicked();
 
-
     void on_Document_2_clicked();
 
     void on_pushButton_15_clicked();
@@ -118,7 +75,29 @@ private slots:
 
     void on_pushButton_13_clicked();
 
+    void on_maleBtn_clicked();
+
+    void on_femaleBtn_clicked();
+
+    void on_Document_clicked();
+
+    void on_Package_clicked();
+
+    void on_Electronic_clicked();
+
+    void on_Gift_clicked();
+
+    void on_maleBtn_2_clicked();
+
+    void on_femaleBtn_2_clicked();
+
+    void on_maleBtn_3_clicked();
+
+    void on_femaleBtn_3_clicked();
+
 private:
     Ui::MainWindow *ui;
+    QString gender, type;
+    QSqlDatabase db;
 };
 #endif // MAINWINDOW_H

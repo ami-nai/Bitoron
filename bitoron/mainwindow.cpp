@@ -8,10 +8,17 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     ui->container->setCurrentIndex(0);
+
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("C:/Qt/Projects/Bitoron/bitoron/data.db");
+    db.open();
+    if (db.isOpen()) qDebug("Database accessed.");
+    else qDebug("Check the location of the database file");
 }
 
 MainWindow::~MainWindow()
 {
+    db.close();
     delete ui;
 }
 
@@ -45,252 +52,176 @@ void MainWindow::on_Btn_admin_clicked()
 
 void MainWindow::on_signinBtn_2_clicked()
 {
-    connopen();
-
-    QString UserName, Password, status = "user";
+    QString UserName, Password;
     UserName = ui->userLineEdit_3->text();
     Password = ui->passLineEdit_2->text();
 
-    QSqlQuery qry;
-    qry.prepare("select * from list where Username='"+UserName+"' and Password = '"+Password+"' and Status = '"+status+"'");
-    if (qry.exec()) {
-        int count = 0;
-        while (qry.next()) {
-            count++;
-        }
-        if (count == 1) {
-            connclose();
-            ui->container->setCurrentIndex(4);
-        }
-        else if (count == 0){
-            QMessageBox msgBox;
-            msgBox.setText("User not found");
-            msgBox.exec();
-            connclose();
-        }
+    QSqlQuery query;
+    query.exec("SELECT * FROM Users WHERE Nickname = ('"+UserName+"') AND password = ('"+Password+"') ");
+    if (query.next()) {
+        ui->container->setCurrentIndex(4);
+    }
+    else {
+        qDebug() << "Didn't found user!" << endl;
     }
 }
 
 void MainWindow::on_signupBtn_2_clicked()
 {
-    connopen();
-
-    QString firstname, lastname, username, district, mobile, password, gender, status;
+    QString firstname, lastname, nickname, district, mobile, password;
     firstname = ui->firstnameLineEdit_2->text();
     lastname = ui->lastnameLineEdit_2->text();
-    username = ui->userLineEdit_4->text();
+    nickname = ui->userLineEdit_4->text();
     district = ui->disLineEdit_4->text();
     mobile = ui->mobileLineEdit_5->text();
     password = ui->passLineEdit_6->text();
-    if (ui->maleBtn_2) {
-        gender = "Male";
-    }
-    if (ui->femaleBtn_2){
-        gender = "Female";
-    }
-    status = "user";
 
-    QSqlQuery qry;
-    qry.prepare("insert into list (FirstName, LastName, Username, District, Mobile, Password, Gender, Status) values ('"+firstname+"', '"+lastname+"', '"+username+"', '"+district+"', '"+mobile+"', '"+password+"', '"+gender+"', '"+status+"')");
+    QSqlQuery query;
+    query.prepare("INSERT INTO Users (first, last, nickname, district, mobile, password, gender) VALUES ('"+firstname+"', '"+lastname+"', '"+nickname+"', '"+district+"', '"+mobile+"', '"+password+"', '"+gender+"')");
 
-    if (qry.exec()) {
-        QMessageBox msgBox;
-        msgBox.setText("!!! Welcome !!!");
-        msgBox.exec();
-        connclose();
-        ui->container->setCurrentIndex(4);
+    if (query.exec()) {
+        qDebug() << "Inserted User into database !" << endl;
+        qDebug() << "Gender: " << gender << endl;
     }
     else {
-        QMessageBox msgBox;
-        msgBox.setText("!!! ERROR !!!");
-        msgBox.exec();
-        connclose();
+        qDebug() << "Failed to insert user." << endl;
     }
 }
 
 void MainWindow::on_signinBtn_3_clicked()
 {
-    connopen();
-
-    QString AdminName, Password, status = "admin";
+    QString AdminName, Password;
     AdminName = ui->userLineEdit_5->text();
     Password = ui->passLineEdit_3->text();
 
-
-    QSqlQuery qry;
-    qry.prepare("select * from list where Username='"+AdminName+"' and Password = '"+Password+"' and Status = '"+status+"'");
-    if (qry.exec()) {
-        int count = 0;
-        while (qry.next()) {
-            count++;
-        }
-        if (count == 1) {
-            connclose();
-            ui->container->setCurrentIndex(6);
-        }
-        else if (count == 0){
-            QMessageBox msgBox;
-            msgBox.setText("Admin not found");
-            msgBox.exec();
-            connclose();
-        }
+    QSqlQuery query;
+    query.exec("SELECT * FROM Admins WHERE Nickname = ('"+AdminName+"') AND password = ('"+Password+"') ");
+    if (query.next()) {
+        ui->container->setCurrentIndex(6);
+    }
+    else {
+        qDebug() << "Didn't found Admin!" << endl;
     }
 }
 
 
 void MainWindow::on_signupBtn_3_clicked()
 {
-    connopen();
-
-    QString firstname, lastname, username, district, mobile, password, gender, status;
+    QString firstname, lastname, nickname, district, mobile, password;
     firstname = ui->firstnameLineEdit_3->text();
     lastname = ui->lastnameLineEdit_3->text();
-    username = ui->userLineEdit_6->text();
+    nickname = ui->userLineEdit_6->text();
     district = ui->disLineEdit_5->text();
     mobile = ui->mobileLineEdit_6->text();
     password = ui->passLineEdit_7->text();
-    if (ui->maleBtn_3) {
-        gender = "Male";
-    }
-    if (ui->femaleBtn_3){
-        gender = "Female";
-    }
-    status = "admin";
 
-    QSqlQuery qry;
-    qry.prepare("insert into list (FirstName, LastName, Username, District, Mobile, Password, Gender, Status) values ('"+firstname+"', '"+lastname+"', '"+username+"', '"+district+"', '"+mobile+"', '"+password+"', '"+gender+"', '"+status+"')");
+    QSqlQuery query;
+    query.prepare("INSERT INTO Admins (first, last, nickname, district, mobile, password, gender) VALUES ('"+firstname+"', '"+lastname+"', '"+nickname+"', '"+district+"', '"+mobile+"', '"+password+"', '"+gender+"')");
 
-    if (qry.exec()) {
-        QMessageBox msgBox;
-        msgBox.setText("!!! Welcome !!!");
-        msgBox.exec();
-        connclose();
-        ui->container->setCurrentIndex(6);
+    if (query.exec()) {
+        qDebug() << "Inserted Admin into database !" << endl;
+        qDebug() << "Gender: " << gender << endl;
     }
     else {
-        QMessageBox msgBox;
-        msgBox.setText("!!! ERROR !!!");
-        msgBox.exec();
-        connclose();
+        qDebug() << "Failed to insert Admin." << endl;
     }
 }
 
 
 void MainWindow::on_signinBtn_clicked()
 {
-    connopen();
-
-    QString BoyName, Password, status = "delivery";
+    QString BoyName, Password;
     BoyName = ui->userLineEdit->text();
     Password = ui->passLineEdit->text();
 
-    QSqlQuery qry;
-    qry.prepare("select * from list where Username='"+BoyName+"' and Password = '"+Password+"' and Status = '"+status+"'");
-    if (qry.exec()) {
-        int count = 0;
-        while (qry.next()) {
-            count++;
-        }
-        if (count == 1) {
-            ui->container->setCurrentIndex(6);
-            connclose();
-        }
-        else if (count == 0){
-            QMessageBox msgBox;
-            msgBox.setText("Not found");
-            msgBox.exec();
-            connclose();
-        }
+    QSqlQuery query;
+    query.exec("SELECT * FROM DeliveryBoys WHERE Nickname = ('"+BoyName+"') AND password = ('"+Password+"') ");
+    if (query.next()) {
+        ui->container->setCurrentIndex(0);
+    }
+    else {
+        qDebug() << "Didn't found Delivery Boy!" << endl;
     }
 }
 
 
 void MainWindow::on_signupBtn_clicked()
 {
-    connopen();
-
-    QString firstname, lastname, username, district, mobile, password, gender, status;
+    QString firstname, lastname, nickname, district, mobile, password;
     firstname = ui->firstnameLineEdit->text();
     lastname = ui->lastnameLineEdit->text();
-    username = ui->userLineEdit_2->text();
+    nickname = ui->userLineEdit_2->text();
     district = ui->disLineEdit_3->text();
     mobile = ui->mobileLineEdit_4->text();
     password = ui->passLineEdit_5->text();
 
-    if (ui->maleBtn) {
-        gender = "Male";
-    }
-    if (ui->femaleBtn){
-        gender = "Female";
-    }
+    QSqlQuery query;
+    query.prepare("INSERT INTO DeliveryBoys (first, last, nickname, district, mobile, password, gender) VALUES ('"+firstname+"', '"+lastname+"', '"+nickname+"', '"+district+"', '"+mobile+"', '"+password+"', '"+gender+"')");
 
-    status = "delivery";
-
-    QSqlQuery qry;
-    qry.prepare("insert into list (FirstName, LastName, Username, District, Mobile, Password, Gender, Status) values ('"+firstname+"', '"+lastname+"', '"+username+"', '"+district+"', '"+mobile+"', '"+password+"', '"+gender+"', '"+status+"')");
-
-    if (qry.exec()) {
-        QMessageBox msgBox;
-        msgBox.setText("!!! Welcome !!!");
-        msgBox.exec();
-        connclose();
-        ui->container->setCurrentIndex(0);
+    if (query.exec()) {
+        qDebug() << "Inserted Delivery Boy into database !" << endl;
+        qDebug() << "Gender: " << gender << endl;
     }
     else {
-        QMessageBox msgBox;
-        msgBox.setText("!!! ERROR !!!");
-        msgBox.exec();
-        connclose();
+        qDebug() << "Failed to insert Delivery Boy." << endl;
     }
 }
-
 
 
 void MainWindow::on_pushButton_8_clicked()
 {
-    QString name, mobile, address, pickup, drop, type;
+    QString source, destination, name, mobile, address;
+    source = ui->lineEdit->text();
+    destination = ui->lineEdit_2->text();
     name = ui->lineEdit_3->text();
     mobile = ui->lineEdit_4->text();
     address = ui->lineEdit_5->text();
-    pickup = ui->lineEdit->text();
-    drop = ui->lineEdit_2->text();
 
-    if (ui->Document->isChecked()) type = "Document";
-    else if (ui->Package->isChecked()) type = "Package";
-    else if (ui->Electronic->isChecked()) type = "Electronic";
-    else if (ui->Gift->isChecked()) type = "Gift";
+    QSqlQuery query;
+    if (type == "document") {
+        query.prepare("INSERT INTO Documents (Source, Destination, Name, Mobile, Address) VALUES ('"+source+"', '"+destination+"', '"+name+"', '"+mobile+"', '"+address+"')");
 
-    qDebug() << name << " " << mobile << " " << address << " " << pickup << " " << drop;
-
-    connopen();
-
-    QSqlQuery qry1;
-    qry1.prepare("INSERT INTO `Order` (Name, MobileW, Address, Pickup, Drop, Type) "
-                 "VALUES (:name, :mobile, :address, :pickup, :drop, :type)");
-
-    qry1.bindValue(":name", name);
-    qry1.bindValue(":mobile", mobile);
-    qry1.bindValue(":address", address);
-    qry1.bindValue(":pickup", pickup);
-    qry1.bindValue(":drop", drop);
-    qry1.bindValue(":type", type);
-
-    bool success = qry1.exec();
-
-    if (success) {
-        QMessageBox msgBox;
-        msgBox.setText("!!! Thank you for trusting us !!!");
-        msgBox.exec();
-        connclose();
-        ui->container->setCurrentIndex(0);
-    } else {
-        QMessageBox msgBox;
-        msgBox.setText("!!! ERROR !!!");
-        msgBox.exec();
-        connclose();
+        if (query.exec()) {
+            qDebug() << "Inserted document into database !" << endl;
+        }
+        else {
+            qDebug() << "Failed to insert document." << endl;
+        }
     }
-}
+    else if (type == "package") {
+        query.prepare("INSERT INTO Package (Source, Destination, Name, Mobile, Address) VALUES ('"+source+"', '"+destination+"', '"+name+"', '"+mobile+"', '"+address+"')");
 
+        if (query.exec()) {
+            qDebug() << "Inserted package into database !" << endl;
+        }
+        else {
+            qDebug() << "Failed to insert package." << endl;
+        }
+    }
+    else if (type == "electronics") {
+        query.prepare("INSERT INTO Electronics (Source, Destination, Name, Mobile, Address) VALUES ('"+source+"', '"+destination+"', '"+name+"', '"+mobile+"', '"+address+"')");
+
+        if (query.exec()) {
+            qDebug() << "Inserted electronics into database !" << endl;
+        }
+        else {
+            qDebug() << "Failed to insert electronics." << endl;
+        }
+    }
+    else if (type == "gift") {
+        query.prepare("INSERT INTO Gift (Source, Destination, Name, Mobile, Address) VALUES ('"+source+"', '"+destination+"', '"+name+"', '"+mobile+"', '"+address+"')");
+
+        if (query.exec()) {
+            qDebug() << "Inserted gift into database !" << endl;
+        }
+        else {
+            qDebug() << "Failed to insert gift." << endl;
+        }
+    }
+
+
+    //qDebug() << name << " " << mobile << " " << address << " " << pickup << " " << drop << type;
+}
 
 void MainWindow::on_pushButton_11_clicked()
 {
@@ -334,19 +265,9 @@ void MainWindow::on_backBtn_clicked()
 }
 
 
-
-
 void MainWindow::on_Document_2_clicked()
 {
-    QSqlQueryModel * model = new QSqlQueryModel();
-    connopen();
-    QSqlQuery qry;
-    qry.prepare("select * from list");
-    qry.exec();
-    model->setQuery(qry);
-    ui->tableView_3->setModel(model);
-    connclose();
-    qDebug() << (model->rowCount());
+
 }
 
 void MainWindow::on_pushButton_14_clicked()
@@ -356,35 +277,14 @@ void MainWindow::on_pushButton_14_clicked()
 
 void MainWindow::on_pushButton_15_clicked()
 {
-    QSqlQueryModel * model = new QSqlQueryModel();
-    connopen();
-    QSqlQuery qry;
-    qry.prepare("select * from list");
-    qry.exec();
-    model->setQuery(qry);
-    ui->tableView->setModel(model);
-    connclose();
-    qDebug() << (model->rowCount());
-    ui->admin_container->setCurrentIndex(1);
+
 }
 
 
 void MainWindow::on_pushButton_17_clicked()
 {
-    QSqlQueryModel * model = new QSqlQueryModel();
-    connopen();
-    QSqlQuery qry;
-    qry.prepare("select * from list");
-    qry.exec();
-    model->setQuery(qry);
-    ui->tableView_4->setModel(model);
-    connclose();
-    qDebug() << (model->rowCount());
-    ui->admin_container->setCurrentIndex(2);
+
 }
-
-
-
 
 
 void MainWindow::on_pushButton_16_clicked()
@@ -396,5 +296,65 @@ void MainWindow::on_pushButton_16_clicked()
 void MainWindow::on_pushButton_13_clicked()
 {
     ui->container->setCurrentIndex(0);
+}
+
+
+void MainWindow::on_maleBtn_clicked()
+{
+    gender = "male";
+}
+
+
+void MainWindow::on_femaleBtn_clicked()
+{
+    gender = "female";
+}
+
+
+void MainWindow::on_Document_clicked()
+{
+    type = "document";
+}
+
+
+void MainWindow::on_Package_clicked()
+{
+    type = "package";
+}
+
+
+void MainWindow::on_Electronic_clicked()
+{
+    type = "electronics";
+}
+
+
+void MainWindow::on_Gift_clicked()
+{
+    type = "gift";
+}
+
+
+void MainWindow::on_maleBtn_2_clicked()
+{
+    gender = "male";
+}
+
+
+void MainWindow::on_femaleBtn_2_clicked()
+{
+    gender = "female";
+}
+
+
+void MainWindow::on_maleBtn_3_clicked()
+{
+    gender = "male";
+}
+
+
+void MainWindow::on_femaleBtn_3_clicked()
+{
+    gender = "female";
 }
 
